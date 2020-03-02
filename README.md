@@ -5,7 +5,8 @@ A tool created for self-censoring.
 > Refs:
 >
 > https://github.com/Muruwu/wordChecker (for api reference)
-> https://github.com/morenjiujiu/sensitive\_content\_filter (word dictionary & algorithm)
+>
+> https://github.com/morenjiujiu/sensitive_content_filter (word dictionary & algorithm)
 
 ## Install
 
