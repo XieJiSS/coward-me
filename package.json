@@ -1,5 +1,5 @@
 {
-  "name": "censor-myself",
+  "name": "coward-me",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "WTFPL",
   "dependencies": {
     "request": "^2.87.0",
     "uuid": "^3.2.1"
