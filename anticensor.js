@@ -2,7 +2,7 @@
  * @param {string} text
  */
 function hide(text) {
-  text = text.replace(/ /g, "").replace(/\,/g, "，");
+  text = text.replace(/\s/g, "").replace(/\,/g, "，");
   const len = text.length;
   const placeholder = "口";
   if(len <= 1) return text;
