@@ -72,7 +72,6 @@ function hide(text) {
     }
     if(currentMaxLen > maxLen) maxLen = currentMaxLen;
   }
-  console.log(maxLen);
   for(let i = 0; i < row; i++) {
     for(let j = 0; j < maxLen; j++) {
       if(!result[i][j]) result[i][j] = placeholder;
