@@ -19,6 +19,7 @@ $ yarn install
 ## Usage
 
 ```shell
-$ node ./index.js "测试文本"
+$ node ./censor.js "测试文本"
+$ node ./anticensor.js "测试文本"
 ```
 
