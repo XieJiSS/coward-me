@@ -3,20 +3,76 @@
  */
 function hide(text) {
   text = text.replace(/ /g, "").replace(/\,/g, "，");
-  const row = text.length <= 100 ? Math.max(1, ~~Math.sqrt(text.length)) : 1 + ~~(text.length / 100);
-  if(row <= 1) return text;
-  const T = row + (row - 2), placeholder = "口";
-  let result = Array.from(new Array(row), () => []);
+  const len = text.length;
+  const placeholder = "口";
+  if(len <= 1) return text;
+  let row = 1 + Math.max(2, ~~Math.sqrt(len));
+  let T = row + (row - 2);
+  if(len > 36) {
+    do {
+      row += 1;
+      T = row + (row - 2)
+    } while((len - row) / T > 3);
+  }
+  if(len <= 16) {
+    if(len >= 9) {
+      row += 1;
+      T += 2;
+    } else {
+      // 懒得想算法了，打表吧
+      let table;
+      if(len === 8) {
+        table = [
+          [text[0], void 0 , text[4], void 0 ],
+          [text[1], text[3], text[5], text[7]],
+          [text[2], void 0 , text[6], void 0 ],
+        ];
+      } else if(len >= 5) {
+        table = [
+          [text[0], void 0 , text[4]],
+          [text[1], text[3], text[5]],
+          [text[2], void 0 , text[6]],
+        ];
+      } else if(len === 4) {
+        table = [
+          [text[0], void 0 ],
+          [text[1], text[3]],
+          [text[2], void 0 ],
+        ];
+      } else if(len === 3) {
+        table = [
+          [text[0]],
+          [text[1]],
+          [text[2]],
+        ];
+      } else {
+        table = [
+          [text[0]],
+          [text[1]],
+        ];
+      }
+      return table.map(line => line.map(ch => ch === void 0 ? placeholder : ch).join("")).join("\n");
+    }
+  }
+  let result = Array.from(new Array(row), () => new Array(4 * ~~(len / T)));
   let x = 0, y = 0;
-  for(let i = 0; i < text.length; i++) {
-    x = ((i % T) < row ? 0 : (i % T) - row + 1) + (row - 1) * ~~(i / T);
+  for(let i = 0; i < len; i++) {
+    x = 4 * ~~(i / T);
+    if(i % T === row) x += 1;
+    else if(i % T > row && i % T <= T - 2) x += 2;
+    else if(i % T === T - 1 && T > 2) x += 3;
     y = (i % T) < row ? (i % T) : (T - (i % T));
     result[y][x] = text[i];
   }
   let maxLen = 0;
   for(let i = 0; i < row; i++) {
-    if(result[i].length > maxLen) maxLen = result[i].length;
+    let currentMaxLen = 0;
+    for(let j = 0; j < result[i].length; j++) {
+      if(result[i][j] && j + 1 > currentMaxLen) currentMaxLen = j + 1;
+    }
+    if(currentMaxLen > maxLen) maxLen = currentMaxLen;
   }
+  console.log(maxLen);
   for(let i = 0; i < row; i++) {
     for(let j = 0; j < maxLen; j++) {
       if(!result[i][j]) result[i][j] = placeholder;
