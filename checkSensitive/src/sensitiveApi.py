@@ -204,6 +204,7 @@ def get(txt):
                 u"sensitive":grade != u"通过",
                 u"content":txt,
                 u"action":grade,
+                u"badwords": sensitive_list,
                 u"replaced":txt_replace
             }
 
@@ -211,8 +212,8 @@ def get(txt):
             result_json={
                 u"sensitive":True,
                 u"content":txt,
-                u"txtLength":txt_length,
                 u"action":u"删除",
+                u"badwords": sensitive_list,
                 u"replaced":""
             }
 
@@ -227,17 +228,5 @@ def get(txt):
     return result_log
 
 
-
-
 if __name__ == '__main__':
     print(get(sys.argv[1]));
-
-
-"""
-curl -H "Content-type: application/json; charset=utf-8" -X POST http://127.0.0.1:4000/sensitive -d '{"txt":"访问 www.taobao.com"}'
-
-curl -H "Content-type: application/json; charset=utf-8" -X POST http://127.0.0.1:4000/sensitive -d '{"txt":"小姐姐真漂亮，像个大王八,大王八"}'
-
-curl -H "Content-type: application/json; charset=utf-8" -X POST http://127.0.0.1:4000/sensitive -d '{"txt":"国家主席习近平在中国青岛主持上海合作组织成员国元首理事会第十八次会议。王八蛋 荧幕中的情节。然后就是fuck dog 跟随着egg 主人公怒哀乐情节中。法.轮#功 难过就躺在某一个人的怀里，尽情的阐述心扉或者手机卡复制器，一个贱人一杯红酒一部电影在夜深人静的晚上，关上电话静静的发呆着。"}'
-
-"""
