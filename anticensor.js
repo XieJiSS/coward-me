@@ -2,7 +2,11 @@
  * @param {string} text
  */
 function hide(text) {
-  text = text.replace(/\s/g, "").replace(/\,/g, "，");
+  text = text.replace(/\s/g, "").replace(/\,/g, "，").replace(/([a-zA-Z0-9])/g, ch => {
+    return String.fromCharCode(ch.charCodeAt(0) + 0xFEE0);
+  });
+
+  const BLOCK_CNT = 5;
   const len = text.length;
   const placeholder = "口";
   if(len <= 1) return text;
@@ -12,7 +16,7 @@ function hide(text) {
     do {
       row += 1;
       T = row + (row - 2)
-    } while((len - row) / T > 3);
+    } while((len - row) / T > BLOCK_CNT);
   }
   if(len <= 16) {
     if(len >= 9) {
@@ -54,7 +58,7 @@ function hide(text) {
       return table.map(line => line.map(ch => ch === void 0 ? placeholder : ch).join("")).join("\n");
     }
   }
-  let result = Array.from(new Array(row), () => new Array(4 * ~~(len / T)));
+  let result = Array.from(new Array(row), () => new Array((BLOCK_CNT + 1) * ~~(len / T)));
   let x = 0, y = 0;
   for(let i = 0; i < len; i++) {
     x = 4 * ~~(i / T);
