@@ -1,16 +1,13 @@
 const fs = require("fs");
 
 const BLOCK_CNT = 3;
-const CHAR_PER_LINE = BLOCK_CNT * 4 + 1;
+const CHAR_PER_LINE = BLOCK_CNT * 2 + 1;
+const CHAR_PER_PARA = CHAR_PER_LINE * 10 - 6;
 
 /**
  * @param {string} text
  */
 function hideSome(text) {
-  text = text.replace(/\s/g, "").replace(/\,/g, "，").replace(/([a-zA-Z0-9])/g, ch => {
-    return String.fromCharCode(ch.charCodeAt(0) + 0xFEE0);
-  });
-
   const len = text.length;
   const placeholder = " ";
   if(len <= 1) return text;
@@ -92,13 +89,16 @@ function hideSome(text) {
  * @param {string} text
  */
 function hide(text) {
-  if(text.length > 10 * CHAR_PER_LINE) {
+  text = text.replace(/\s/g, "").replace(/\,/g, "，").replace(/([a-zA-Z0-9])/g, ch => {
+    return String.fromCharCode(ch.charCodeAt(0) + 0xFEE0);
+  });
+  if(text.length > CHAR_PER_PARA) {
     let round = 0, result = "";
     do {
-      result += hideSome(text.substr(round * 10 * CHAR_PER_LINE, 10 * CHAR_PER_LINE));
+      result += hideSome(text.substr(round * CHAR_PER_PARA, CHAR_PER_PARA));
       result += "\n\n";
       round ++;
-    } while(text.length - round * 10 * CHAR_PER_LINE > 0);
+    } while(text.length - round * CHAR_PER_PARA > 0);
     return result.trimEnd();
   } else {
     return hideSome(text);
