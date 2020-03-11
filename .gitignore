@@ -4,3 +4,4 @@ config.js
 .vscode
 sensitive.log
 *.pyc
+*.txt

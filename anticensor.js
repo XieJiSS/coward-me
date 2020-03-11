@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 /**
  * @param {string} text
  */
@@ -84,4 +86,8 @@ function hide(text) {
   return result.map(line => line.join("")).join("\n");
 }
 
-console.log(hide(process.argv[2] || ""));
+if(fs.existsSync(__dirname + "/" + process.argv[2])) {
+  console.log(hide(
+    fs.readFileSync(__dirname + "/" + process.argv[2]).toString("utf-8")
+  ));
+} else console.log(hide(process.argv[2] || ""));
