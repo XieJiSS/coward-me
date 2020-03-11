@@ -10,7 +10,7 @@ function hide(text) {
 
   const BLOCK_CNT = 5;
   const len = text.length;
-  const placeholder = "口";
+  const placeholder = " ";
   if(len <= 1) return text;
   let row = 1 + Math.max(2, ~~Math.sqrt(len));
   let T = row + (row - 2);
