@@ -1,14 +1,16 @@
 const fs = require("fs");
 
+const BLOCK_CNT = 3;
+const CHAR_PER_LINE = BLOCK_CNT * 4 + 1;
+
 /**
  * @param {string} text
  */
-function hide(text) {
+function hideSome(text) {
   text = text.replace(/\s/g, "").replace(/\,/g, "，").replace(/([a-zA-Z0-9])/g, ch => {
     return String.fromCharCode(ch.charCodeAt(0) + 0xFEE0);
   });
 
-  const BLOCK_CNT = 5;
   const len = text.length;
   const placeholder = " ";
   if(len <= 1) return text;
@@ -84,6 +86,23 @@ function hide(text) {
     }
   }
   return result.map(line => line.join("")).join("\n");
+}
+
+/**
+ * @param {string} text
+ */
+function hide(text) {
+  if(text.length > 10 * CHAR_PER_LINE) {
+    let round = 0, result = "";
+    do {
+      result += hideSome(text.substr(round * 10 * CHAR_PER_LINE, 10 * CHAR_PER_LINE));
+      result += "\n\n";
+      round ++;
+    } while(text.length - round * 10 * CHAR_PER_LINE > 0);
+    return result.trimEnd();
+  } else {
+    return hideSome(text);
+  }
 }
 
 if(fs.existsSync(__dirname + "/" + process.argv[2])) {
