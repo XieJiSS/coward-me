@@ -37,9 +37,9 @@ class AliSpam {
       clientInfo: options.clientInfo || { ip: "10.8.8.8" }
     });
 
-    return new Promise((resosve, reject) => {
+    return new Promise((resolve, reject) => {
       green(params, (err, res) => {
-        if (err) return reject(err);
+        if (err) reject(err);
         if (typeof res === "string") res = JSON.parse(res);
 
         if (res && res.code === 200 && res.data) {
@@ -47,19 +47,20 @@ class AliSpam {
           if (!results || !results[0]) return reject("Alispam service get null response, pls contact BE");
 
           const _res = this._handler(results[0], content);
-          return resosve(_res);
+          resolve(_res);
         }
       });
     });
   }
 
-  _handler(data, content) {
+  _handler(data) {
     const { rate } = data;
     // sensitive rate = 100 - normal rate
     let res = {
       sensitive: false,
       rate: Math.floor((100 - rate) * 1e3) / 1e3,
-    }, _res = {};
+    };
+    let _res = {};
 
     if (data.suggestion != "pass" && data.label) {
       _res = { sensitive: true, reason: keyWordReasonMap[data.label] || data.label, rate };

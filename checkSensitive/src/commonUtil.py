@@ -16,7 +16,7 @@ def getReg(txt_convert):
     url_patten = r"([^\s]+(\.com))|([a-zA-z]+://[^\s]*)" #http://xxx, www.xxxx.com, 1234@qq.com
     html_patten=r"<(\S*?)[^>]*>.*?|<.*? />"
     qq_phone_patten=r"[1-9][0-9]{4,}" #第一位1-9之间的数字，第二位0-9之间的数字，大于1000号
-    wx_patten=r"[a-zA-Z][a-zA-Z0-9_-]{5,19}$"
+    wx_patten=r"[wWvV][xX][:：][a-zA-Z][a-zA-Z0-9_-]{5,19}$"
 
     if re.findall(url_patten,txt_convert).__len__()>0:
         result = u"疑似[网页链接或邮箱]"

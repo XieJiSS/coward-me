@@ -19,13 +19,12 @@ async function main(rawText) {
    */
   const obj = {
     sensitive: false,
-    action: '通过',
+    action: "通过",
     replaced: text,
     badwords: [],
   };
   try {
     const _obj = JSON.parse(stdout);
-    console.log(_obj);
     obj.sensitive = _obj.sensitive;
     obj.action = _obj.action;
     obj.replaced = _obj.replaced;

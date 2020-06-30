@@ -178,6 +178,7 @@ def get(txt):
         txt_length=len(txt)
         txt_convert= qbTransform.strQ2B(txt) #全角转半角
         reg_result= commonUtil.getReg(txt_convert) #正则过滤
+        sensitive_list = []
 
         if reg_result==u"非广告文本":
             #是否包含敏感词
@@ -213,7 +214,7 @@ def get(txt):
                 u"sensitive":True,
                 u"content":txt,
                 u"action":u"删除",
-                u"badwords": sensitive_list,
+                u"badwords": ["判定为广告", reg_result],
                 u"replaced":""
             }
 
