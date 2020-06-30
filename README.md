@@ -25,6 +25,7 @@ $ node ./anticensor.js "测试文本"
 
 ## AntiCensor Example
 
+```
 接   采   小   同
 到  意访  半时  的事
 武 同 的 约 后 她 、
@@ -59,3 +60,4 @@ $ node ./anticensor.js "测试文本"
 新   华   市   报
 
 ......
+```
