@@ -4,7 +4,6 @@ const checkOffline = require("./checkSensitive");
 
 async function main() {
   const text = process.argv[2] || "";
-  console.log("text   :", text);
   const checkOnlinePm = checkOnline.checkSpam(text);
   const checkOfflinePm = checkOffline(text);
   const result = await Promise.all([ checkOnlinePm, checkOfflinePm ]);

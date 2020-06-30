@@ -3,9 +3,10 @@ const { promisify } = require("util");
 const exec = promisify(cp.exec);
 
 /**
- * @param {string} text
+ * @param {string} rawText
  */
-async function main(text) {
+async function main(rawText) {
+  const text = (rawText || "").replace(/[\n<>&|@!\\"'$`*;/:~%]/g, " ").substr(0, 3000);
   const { stdout, stderr } = await exec(`python2 "${__dirname}/src/sensitiveApi.py" "${text}"`);
   if(stderr) console.error("sensitiveApi.py:", stderr);
   /**
