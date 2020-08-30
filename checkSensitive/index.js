@@ -1,13 +1,13 @@
 const cp = require("child_process");
 const { promisify } = require("util");
-const exec = promisify(cp.exec);
+const execFile = promisify(cp.execFile);
 
 /**
  * @param {string} rawText
  */
 async function main(rawText) {
-  const text = (rawText || "").replace(/[\n<>&|@!\\"'$`*;/:~%]/g, " ").substr(0, 3000);
-  const { stdout, stderr } = await exec(`python2 "${__dirname}/src/sensitiveApi.py" "${text}"`);
+  const text = (rawText || "").substr(0, 3000);
+  const { stdout, stderr } = await execFile("/usr/bin/env", ["python2", `${__dirname}/src/sensitiveApi.py`, `${text}`]);
   if(stderr) console.error("sensitiveApi.py:", stderr);
   /**
    * @type {{
